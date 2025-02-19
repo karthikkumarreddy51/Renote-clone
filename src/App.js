@@ -10,10 +10,22 @@ import ContactUs from './components/ContactUs';
 import Footer from './components/Footer';
 import './styles/styles.css';
 import logo from './assets/Logo.png';
-import bookNowIcon from './assets/booknow.png'; // Import the book now icon
-import whatsappIcon from './assets/whatsapp.png'; // Import the WhatsApp icon
+import bookNowIcon from './assets/booknow.png';
+import whatsappIcon from './assets/whatsapp.png';
 
-// ... (Container styled component remains the same)
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // Ensure the app takes up full viewport height
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1; // Allow the content to expand and fill available space
+  padding-bottom: 60px; /* Adjust padding to prevent footer overlap */
+  @media (max-width: 768px) {
+    padding-bottom: 100px; /* Adjust padding for smaller screens if needed */
+  }
+`;
 
 const FloatingButton = styled.a`
   position: fixed;
@@ -36,19 +48,23 @@ const FloatingButton = styled.a`
     background-color: ${(props) => props.hoverBackgroundColor};
   }
 
-  /* Style for image icons inside the button */
   img {
-    max-width: 80%; // Adjust as needed
-    max-height: 80%; // Adjust as needed
+    max-width: 80%;
+    max-height: 80%;
+  }
+
+  @media (max-width: 768px) { // Adjust positioning for mobile
+    bottom: ${(props) => (props.bottom === '80px' ? '70px' : props.bottom === '20px' ? '10px' : props.bottom)}; // Adjust as needed
+    right: 10px;
   }
 `;
 
 function App() {
   return (
     <Router>
-      <div className="app">
+      <AppContainer> {/* Use the styled container */}
         <Navbar logo={logo} />
-        
+        <ContentWrapper> {/* Wrap the main content */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
@@ -56,6 +72,7 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>
+        </ContentWrapper>
         <Footer />
 
         <FloatingButton
@@ -66,7 +83,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src={whatsappIcon} alt="WhatsApp" /> {/* Use the WhatsApp icon */}
+          <img src={whatsappIcon} alt="WhatsApp" />
         </FloatingButton>
 
         <FloatingButton
@@ -76,9 +93,9 @@ function App() {
           hoverBackgroundColor="#0056b3"
           bottom="20px"
         >
-          <img src={bookNowIcon} alt="Book Now" /> {/* Use the Book Now icon */}
+          <img src={bookNowIcon} alt="Book Now" />
         </FloatingButton>
-      </div>
+      </AppContainer>
     </Router>
   );
 }
