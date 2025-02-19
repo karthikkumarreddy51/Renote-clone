@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Products from './components/Products';
-import App from './components/App';
+import AppComponent from './components/App';
 import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs';
 import Footer from './components/Footer';
@@ -68,7 +68,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/app" element={<App />} />
+            <Route path="/app" element={<AppComponent />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contact" element={<ContactUs />} />
           </Routes>
