@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import locationIcon from '../assets/location.png';
 import emailIcon from '../assets/email.png';
 import phoneIcon from '../assets/phone.png';
+import Contactus from '../assets/contactUs.png'
 
 const ContactUsContainer = styled.div`
   display: flex;
@@ -109,7 +110,9 @@ const ContactUs = () => {
   };
 
   return (
+    
     <ContactUsContainer>
+      <img src={Contactus}/>
       <ContactInfo>
         <ContactItem>
           <ContactIcon>
