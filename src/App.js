@@ -16,14 +16,17 @@ import whatsappIcon from './assets/whatsapp.png';
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh; // Ensure the app takes up full viewport height
+  min-height: 100vh; /* Ensure it covers full height */
+  width: 100vw; /* Fix width to viewport width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 `;
 
 const ContentWrapper = styled.div`
-  flex: 1; // Allow the content to expand and fill available space
-  padding-bottom: 60px; /* Adjust padding to prevent footer overlap */
+  flex: 1;
+  padding-bottom: 60px;
+  overflow-y: auto; /* Allow vertical scrolling */
   @media (max-width: 768px) {
-    padding-bottom: 100px; /* Adjust padding for smaller screens if needed */
+    padding-bottom: 100px;
   }
 `;
 
@@ -53,8 +56,8 @@ const FloatingButton = styled.a`
     max-height: 80%;
   }
 
-  @media (max-width: 768px) { // Adjust positioning for mobile
-    bottom: ${(props) => (props.bottom === '80px' ? '70px' : props.bottom === '20px' ? '10px' : props.bottom)}; // Adjust as needed
+  @media (max-width: 768px) {
+    bottom: ${(props) => (props.bottom === '80px' ? '70px' : props.bottom === '20px' ? '10px' : props.bottom)};
     right: 10px;
   }
 `;
@@ -62,9 +65,9 @@ const FloatingButton = styled.a`
 function App() {
   return (
     <Router>
-      <AppContainer> {/* Use the styled container */}
+      <AppContainer>
         <Navbar logo={logo} />
-        <ContentWrapper> {/* Wrap the main content */}
+        <ContentWrapper>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />

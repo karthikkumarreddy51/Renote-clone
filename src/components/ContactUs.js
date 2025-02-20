@@ -27,9 +27,9 @@ const ContactImage = styled.img`
 const SmallButton = styled.button`
   position: absolute;
   left: 15.3%;
-  top: 71.6%;
+  top: 71.75%;
   transform: translate(-50%, -50%);
-  background-color: hsl(120, 88.80%, 49.20%);
+  background-color: hsl(120, 90.60%, 45.70%);
   color: white;
   padding: 17px 33px;
   border: none;

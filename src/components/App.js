@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import AppImage from '../assets/app.png'; // Ensure this path is correct
 import { useNavigate } from 'react-router-dom';
+import p1 from '../assets/p1.png';
+import p2 from '../assets/p2.png';
+import p3 from '../assets/p3.png';
 
 // Styled Components
 const AppContainer = styled.div`
@@ -40,11 +43,11 @@ const SmallButton = styled.button`
   transform: translate(-50%, -50%);
   background-color: rgb(16, 248, 16);
   color: white;
-  padding: 18.5px 35.5px; /* Increased padding */
+  padding: 18.5px 35.5px;
   border: none;
-  border-radius: 14px; /* Slightly larger border-radius */
+  border-radius: 14px;
   cursor: pointer;
-  font-size: 16px; /* Increased font size */
+  font-size: 16px;
   transition: background-color 0.3s ease;
   z-index: 1;
   white-space: nowrap;
@@ -54,12 +57,36 @@ const SmallButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 14px; /* Adjust font size for smaller screens */
-    padding: 12px 20px; /* Adjust padding for responsiveness */
+    font-size: 14px;
+    padding: 12px 20px;
   }
 `;
 
+// NEW: Features Section
+const FeaturesSection = styled.div`
+  width: 80%;
+  margin: 0 auto 2rem;
+  text-align: center;
+`;
 
+const FeaturesGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+
+  @media (max-width: 992px) {
+    /* For tablets or smaller devices, use fewer columns */
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const FeatureItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+// Container for text + video
 const ContentAndVideo = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,9 +127,15 @@ const ExploreButton = styled.button`
   margin-top: 1rem;
 `;
 
-// React Component
+// NEW: Testimonial Section
+const TestimonialSection = styled.div`
+  margin-top: 2rem;
+  text-align: center;
+  width: 80%;
+`;
+
 const AppComponent = () => {
-  const videoId = "3N746CqV5DM";
+  const videoId = '3N746CqV5DM';
   const bottomRef = useRef(null);
 
   // Function to scroll to download section
@@ -112,7 +145,7 @@ const AppComponent = () => {
 
   // Function to scroll to top
   const handleExploreClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -122,12 +155,56 @@ const AppComponent = () => {
           <AppStyledImage src={AppImage} alt="App Screenshot" />
           <SmallButton onClick={handleDownloadClick}>Download Now</SmallButton>
         </AppImageContainer>
+
         <h2>App</h2>
+
+        {/* ------------------ App Features Section ------------------ */}
+        <FeaturesSection>
+          <h2>App Features</h2>
+          <FeaturesGrid>
+            <FeatureItem>
+              <h3>AI Chatbot</h3>
+              <p>
+                Analyze, summarize, and interact effortlessly with your virtual assistant at hand.
+              </p>
+            </FeatureItem>
+            <FeatureItem>
+              <h3>Smart Templates</h3>
+              <p>
+                Optimize your workflow with templates for To-Dos, Meeting Minutes, and more.
+              </p>
+            </FeatureItem>
+            <FeatureItem>
+              <h3>Handwritten to Digital Text</h3>
+              <p>
+                Easily convert handwritten notes into editable digital text with high accuracy.
+              </p>
+            </FeatureItem>
+            <FeatureItem>
+              <h3>Easy Search</h3>
+              <p>Find any note or phrase from any document, instantly.</p>
+            </FeatureItem>
+            <FeatureItem>
+              <h3>Effortless Scanning</h3>
+              <p>Enjoy auto-capture and edge detection for seamless scanning.</p>
+            </FeatureItem>
+            <FeatureItem>
+              <h3>Data Security</h3>
+              <p>Protect your data with full encryption for peace of mind.</p>
+            </FeatureItem>
+            <FeatureItem>
+              <h3>Multi-Cloud Support</h3>
+              <p>Access your notes anytime with reliable multi-cloud integration.</p>
+            </FeatureItem>
+          </FeaturesGrid>
+        </FeaturesSection>
       </AppContent>
 
       <ContentAndVideo>
         <TextContent>
-          <h1><b>How to Use Our App?</b></h1>
+          <h1>
+            <b>How to Use Our App?</b>
+          </h1>
           <p>Watch our demo video below to see ReNote AI in action!</p>
           <ExploreButton onClick={handleExploreClick}>Explore</ExploreButton>
         </TextContent>
@@ -142,8 +219,25 @@ const AppComponent = () => {
             allowFullScreen
           />
         </VideoContainer>
+
+        {/* ------------------ Testimonial Section ------------------ */}
+        <TestimonialSection>
+          <h2>Testimonials</h2>
+          <p>
+            &quot;A big shoutout to ReNoteAI for the wonderful gift and what an awesome product. The
+            smart reusable notebook is such a big relief from the overpriced and over-sensitive
+            gadgets like iPad and remarkable. In less than 24hrs, I am hooked to it.&quot;
+          </p>
+          <p>
+            <strong>Amita Vikram Pratap</strong>
+            <br />
+            Co-Founder - MAV Brand Stories LLC
+          </p>
+        </TestimonialSection>
       </ContentAndVideo>
-      <p ref={bottomRef}>Non-Tearable</p>
+
+      {/* Reference element to scroll to */}
+      <div ref={bottomRef} />
     </AppContainer>
   );
 };
