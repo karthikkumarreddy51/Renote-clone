@@ -15,13 +15,9 @@ const ProductsContainer = styled.div`
 `;
 
 const ProductImage = styled.img`
-  max-width: 80%;
+  max-width: 100%;
   height: auto;
   margin-bottom: 1rem;
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-  }
 `;
 
 const ProductsHeading = styled.h2`
@@ -29,12 +25,20 @@ const ProductsHeading = styled.h2`
 `;
 
 const ProductGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 1rem;
+  padding: 1rem;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* 1 column on smaller screens */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
   }
 `;
 
@@ -42,21 +46,30 @@ const ProductItem = styled.div`
   position: relative;
   overflow: hidden;
   border: 1px solid #ccc;
+  width: 200px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
 
-  &:hover::before {
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &::before {
     content: "";
     position: absolute;
-    bottom: 0; // Start at the bottom
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.14);
-    transform: translateY(100%); // Initially hidden below
-    transition: transform 0.3s ease;
+    background-color: rgba(255, 255, 255, 0);
+    opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
   }
 
   &:hover::before {
-    transform: translateY(0); // Move to cover on hover
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.2);
   }
 `;
 
@@ -80,10 +93,10 @@ const ProductName = styled.h3`
 
 const Products = () => {
   const products = [
-    { image: p1, name: "Product 1" },
-    { image: p2, name: "Product 2" },
-    { image: p3, name: "Product 3" },
-    { image: p4, name: "Product 4" },
+    { image: p1, name: "" }, // Empty string for name
+    { image: p2, name: "" }, // Empty string for name
+    { image: p3, name: "" }, // Empty string for name
+    { image: p4, name: "" }, // Empty string for name
   ];
 
   return (
@@ -94,7 +107,7 @@ const Products = () => {
       <ProductGrid>
         {products.map((product, index) => (
           <ProductItem key={index}>
-            <ProductItemImage src={product.image} alt={product.name} />
+            <ProductItemImage src={product.image} alt={`Product ${index + 1}`} />
             <ProductName>{product.name}</ProductName>
           </ProductItem>
         ))}

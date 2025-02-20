@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import AppImage from '../assets/app.png'; // Make sure path is correct
+import AppImage from '../assets/app.png'; // Ensure this path is correct
+import { useNavigate } from 'react-router-dom';
 
+// Styled Components
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
   gap: 2rem;
-
-  @media (max-width: 768px) {
-    text-align: center;
-  }
+  text-align: center;
+  width: 100%;
 `;
 
 const AppContent = styled.div`
@@ -19,59 +19,75 @@ const AppContent = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+`;
+
+const AppImageContainer = styled.div`
+  position: relative;
+  width: 100%;
 `;
 
 const AppStyledImage = styled.img`
-  max-width: 80%;
+  width: 100%;
   height: auto;
+  display: block;
+`;
+
+const SmallButton = styled.button`
+  position: absolute;
+  left: 16.5%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(16, 248, 16);
+  color: white;
+  padding: 18.5px 35.5px; /* Increased padding */
+  border: none;
+  border-radius: 14px; /* Slightly larger border-radius */
+  cursor: pointer;
+  font-size: 16px; /* Increased font size */
+  transition: background-color 0.3s ease;
+  z-index: 1;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgba(0, 204, 0, 0.9);
+  }
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    font-size: 14px; /* Adjust font size for smaller screens */
+    padding: 12px 20px; /* Adjust padding for responsiveness */
   }
 `;
+
 
 const ContentAndVideo = styled.div`
   display: flex;
-  align-items: flex-start;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
   gap: 2rem;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  margin-top: 2rem;
 `;
 
 const TextContent = styled.div`
-  flex: 1;
-  text-align: left;
-
-  @media (max-width: 768px) {
-    text-align: center;
-  }
+  text-align: center;
+  margin-bottom: 1rem;
 `;
 
 const VideoContainer = styled.div`
-  flex: 1.5;
   position: relative;
-  padding-bottom: 50%; /* Increased width */
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  width: 90%;
-  margin-left: -2rem; /* Moved video slightly left */
+  width: 100%;
+`;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+const StyledIframe = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 const ExploreButton = styled.button`
@@ -84,31 +100,42 @@ const ExploreButton = styled.button`
   margin-top: 1rem;
 `;
 
+// React Component
 const AppComponent = () => {
-  const videoId = "3N746CqV5DM"; // Updated with provided YouTube video ID
+  const videoId = "3N746CqV5DM";
+  const bottomRef = useRef(null);
+
+  // Function to scroll to download section
+  const handleDownloadClick = () => {
+    bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Function to scroll to top
+  const handleExploreClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <AppContainer>
       <AppContent>
-        <AppStyledImage src={AppImage} alt="App Screenshot" />
+        <AppImageContainer>
+          <AppStyledImage src={AppImage} alt="App Screenshot" />
+          <SmallButton onClick={handleDownloadClick}>Download Now</SmallButton>
+        </AppImageContainer>
         <h2>App</h2>
       </AppContent>
 
       <ContentAndVideo>
         <TextContent>
-          <span><h1><b>How to Use Our App?</b></h1></span>
-          <p>
-            Watch our demo video beside to see ReNote AI in action!
-          </p>
-          <ExploreButton>Explore</ExploreButton>
+          <h1><b>How to Use Our App?</b></h1>
+          <p>Watch our demo video below to see ReNote AI in action!</p>
+          <ExploreButton onClick={handleExploreClick}>Explore</ExploreButton>
         </TextContent>
 
         <VideoContainer>
-          <iframe
+          <StyledIframe
             title="App Demo Video"
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${videoId}?si=jcTMIiy9TcQRjcbl`} // Ensures the correct video plays
+            src={`https://www.youtube.com/embed/${videoId}?si=jcTMIiy9TcQRjcbl`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
@@ -116,7 +143,7 @@ const AppComponent = () => {
           />
         </VideoContainer>
       </ContentAndVideo>
-      <p>Non-Tearable</p> {/* Added the "Non-Tearable" text */}
+      <p ref={bottomRef}>Non-Tearable</p>
     </AppContainer>
   );
 };

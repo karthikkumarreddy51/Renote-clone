@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import locationIcon from '../assets/location.png';
 import emailIcon from '../assets/email.png';
 import phoneIcon from '../assets/phone.png';
-import Contactus from '../assets/contactUs.png'
+import Contactus from '../assets/contactUs.png';
 
 const ContactUsContainer = styled.div`
   display: flex;
@@ -11,6 +11,43 @@ const ContactUsContainer = styled.div`
   align-items: center;
   padding: 2rem;
   background-color: #f8f9fa;
+`;
+
+const ContactImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const ContactImage = styled.img`
+  width: 100%;
+  height: auto;
+  display: block;
+`;
+
+const SmallButton = styled.button`
+  position: absolute;
+  left: 15.3%;
+  top: 71.6%;
+  transform: translate(-50%, -50%);
+  background-color: hsl(120, 88.80%, 49.20%);
+  color: white;
+  padding: 17px 33px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  z-index: 1;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgba(0, 204, 0, 0.9);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
 `;
 
 const ContactInfo = styled.div`
@@ -87,6 +124,8 @@ const ContactUs = () => {
     comments: '',
   });
 
+  const formRef = useRef(null);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -109,74 +148,57 @@ const ContactUs = () => {
     });
   };
 
+  const handleScroll = () => {
+    if (formRef.current) {
+      const pageHeight = document.documentElement.scrollHeight;
+      window.scrollTo({ top: pageHeight * 0.75, behavior: 'smooth' });
+    }
+  };
+
   return (
-    
-    <ContactUsContainer>
-      <img src={Contactus}/>
-      <ContactInfo>
-        <ContactItem>
-          <ContactIcon>
-            <img src={locationIcon} alt="Location" />
-          </ContactIcon>
-          <span>T-Hub, Hyderabad, Telangana, 500081</span>
-        </ContactItem>
-        <ContactItem>
-          <ContactIcon>
-            <img src={emailIcon} alt="Email" />
-          </ContactIcon>
-          <span>info@renote.ai<br />sales@renote.ai</span>
-        </ContactItem>
-        <ContactItem>
-          <ContactIcon>
-            <img src={phoneIcon} alt="Phone" />
-          </ContactIcon>
-          <span>+91 9666363363<br />+91 8886663326</span>
-        </ContactItem>
-      </ContactInfo>
+    <>
+      <ContactImageContainer>
+        <ContactImage src={Contactus} alt="Contact Us" />
+        <SmallButton onClick={handleScroll}>Reach to Us</SmallButton>
+      </ContactImageContainer>
 
-      <FormContainer>
-        <StyledForm onSubmit={handleSubmit}>
-          <StyledLabel htmlFor="fullName">Full Name*</StyledLabel>
-          <StyledInput
-            type="text"
-            id="fullName"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
+      <ContactUsContainer ref={formRef}>
+        <ContactInfo>
+          <ContactItem>
+            <ContactIcon>
+              <img src={locationIcon} alt="Location" />
+            </ContactIcon>
+            <span>T-Hub, Hyderabad, Telangana, 500081</span>
+          </ContactItem>
+          <ContactItem>
+            <ContactIcon>
+              <img src={emailIcon} alt="Email" />
+            </ContactIcon>
+            <span>info@renote.ai<br />sales@renote.ai</span>
+          </ContactItem>
+          <ContactItem>
+            <ContactIcon>
+              <img src={phoneIcon} alt="Phone" />
+            </ContactIcon>
+            <span>+91 9666363363<br />+91 8886663326</span>
+          </ContactItem>
+        </ContactInfo>
 
-          <StyledLabel htmlFor="email">Email ID</StyledLabel>
-          <StyledInput
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-
-          <StyledLabel htmlFor="contactNumber">Contact Number*</StyledLabel>
-          <StyledInput
-            type="tel"
-            id="contactNumber"
-            name="contactNumber"
-            value={formData.contactNumber}
-            onChange={handleChange}
-            required
-          />
-
-          <StyledLabel htmlFor="comments">Other Comments</StyledLabel>
-          <StyledTextArea
-            id="comments"
-            name="comments"
-            value={formData.comments}
-            onChange={handleChange}
-          />
-
-          <StyledButton type="submit">Send Enquiry</StyledButton>
-        </StyledForm>
-      </FormContainer>
-    </ContactUsContainer>
+        <FormContainer>
+          <StyledForm onSubmit={handleSubmit}>
+            <StyledLabel htmlFor="fullName">Full Name*</StyledLabel>
+            <StyledInput type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} required />
+            <StyledLabel htmlFor="email">Email ID</StyledLabel>
+            <StyledInput type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
+            <StyledLabel htmlFor="contactNumber">Contact Number*</StyledLabel>
+            <StyledInput type="tel" id="contactNumber" name="contactNumber" value={formData.contactNumber} onChange={handleChange} required />
+            <StyledLabel htmlFor="comments">Other Comments</StyledLabel>
+            <StyledTextArea id="comments" name="comments" value={formData.comments} onChange={handleChange} />
+            <StyledButton type="submit">Send Enquiry</StyledButton>
+          </StyledForm>
+        </FormContainer>
+      </ContactUsContainer>
+    </>
   );
 };
 
